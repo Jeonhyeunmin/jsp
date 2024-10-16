@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- 
-	지시자(directive)			: <@%			%>	- 초기 환경설정에 관계된 사항 처리.
+	지시자(directive)			: < %@			%>	- 초기 환경설정에 관계된 사항 처리.
 	스크립틀릿(sciptlet)		: < %		 	%>	- Jsp코드안에서 java코드를 사용할 때 처리
 	선언문(declaration)		: < %!		%>	- Jsp 코드안에서 java 코드나 메소드 등의 선언문을 선언할 때 기술 
 	표현식(expression)		: < %=		%>	- Jsp 코드안에서 값(변수값)을 출력할 때 기술

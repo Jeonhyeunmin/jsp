@@ -39,8 +39,6 @@
 <body>
 <p><br/></p>
 <div class="container">
-  <!-- <form name="myform" method="post" action="test05Ok.jsp"> -->
-  <!-- <form name="myform" method="get" action="/javaGroup/1015/Test07Ok"> -->
   <form name="myform" method="post" action="/javaGroup/1015/Test07Ok2">
   	<div>아이디 : <input type='text' name='mid' value='qwe123' class='form-control' autofocus required/></div>
 		<div>비밀번호 : <input type='password' name='pwd' value='1234' min='1' max='150' class='form-control mb-2' required/></div>
