@@ -5,6 +5,7 @@
 	
 	pageContext.setAttribute("mid", mid);
 	pageContext.setAttribute("pwd", pwd);
+	session.setAttribute("part", "총무과");
 %>
 <!DOCTYPE html>
 <html>
@@ -13,17 +14,14 @@
   <title>t08_resI.jsp</title>
 	<jsp:include page="/include/bs4.jsp"/>
 </head>
+<jsp:include page="/include/Header.jsp" />
 	<body>
 	<p><br/></p>
 	<div class="container">
 	<h2>총무과</h2>
 	<hr>
-	<p><a href="t08_param.jsp" class="btn btn-success">돌아가기</a></p>
-	<h2>회원정보</h2>
-	<p>아이디 : ${mid}</p>
-	<p>비밀번호 : ${pwd}</p>
-	<hr/>
 	</div>
 	<p><br/></p>
 	</body>
+	<jsp:include page="/include/Footer.jsp" />
 </html>

@@ -156,10 +156,10 @@
 	<div>
 	<c:set var="kCode" value="${param.kCode}"/>
 		<c:choose>
-			<c:when test="${kCode eq 'B'}"><c:set var="kName" value="부장"/></c:when>
-			<c:when test="${kCode eq 'K'}"><c:set var="kName" value="과장"/></c:when>
-			<c:when test="${kCode eq 'D'}"><c:set var="kName" value="대리"/></c:when>
-			<c:when test="${kCode eq 'S'}"><c:set var="kName" value="사원"/></c:when>
+			<c:when test="${kCode eq 'B' || kCode eq 'b'}"><c:set var="kName" value="부장"/></c:when>
+			<c:when test="${kCode eq 'K' || kCode eq 'k'}"><c:set var="kName" value="과장"/></c:when>
+			<c:when test="${kCode eq 'D' || kCode eq 'd'}"><c:set var="kName" value="대리"/></c:when>
+			<c:when test="${kCode eq 'S' || kCode eq 's'}"><c:set var="kName" value="사원"/></c:when>
 			<c:otherwise><c:set var="kName" value="파견근로자"/></c:otherwise>
 		</c:choose>
 		<b>입력하신 직급코드의 직급은 <span style="color: red">${kName}</span> 입니다. (입력 : ${kCode})</b>

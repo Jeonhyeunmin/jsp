@@ -1,7 +1,6 @@
 package study.exam.t02_login;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 @WebServlet("/exam/t02_loginOk")
 public class t02_loginOk extends HttpServlet{
@@ -19,7 +17,6 @@ public class t02_loginOk extends HttpServlet{
 		response.setContentType("text/html; charset=utf-8");
 		String mid = request.getParameter("mid") == null ? "" : request.getParameter("mid");
 		String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
-		PrintWriter out = response.getWriter();
 		
 		String idList[] = {"hkd1234S", "kms1234C", "lkj1234J", "adminI", "atom1234I", "btom1234J", "ctom1234C"};
 		String viewPage = "";
@@ -38,15 +35,12 @@ public class t02_loginOk extends HttpServlet{
 				else if(mid.substring(mid.length()-1).equals("C")){
 					viewPage = "/study/exam/t02_login/t02_resC.jsp";
 				}
+				break;
 			}
 			else {
-				 viewPage = "/study/exam/t02_login/t02_login.jsp"; 
+				viewPage = "/study/exam/t02_login/t02_resX.jsp";
 			}
 		}
-		
-		
-		
-		
 		
 		request.setAttribute("mid", mid);
 		request.setAttribute("pwd", pwd);

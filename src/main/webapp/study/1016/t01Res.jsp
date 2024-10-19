@@ -25,7 +25,7 @@
     <div>아이디 : <%=mid%></div>
     <div>비밀번호 : <%=pwd%></div>
     <div>회원등급 : <%=member%></div>
-    <a href="t01_forword.jsp" class="btn btn-success">돌아가기(t01)</a>
+    <p><a href="<%=request.getContextPath()%>/study/exam/t02_login/t02_login.jsp" class="btn btn-success">돌아가기</a></p>
   </div>
 </div>
 <p><br/></p>
