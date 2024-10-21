@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,16 +14,28 @@ import javax.servlet.http.HttpServletResponse;
 public class t02_loginOk extends HttpServlet{
 	 @Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html; charset=utf-8");
+		 
 		String mid = request.getParameter("mid") == null ? "" : request.getParameter("mid");
 		String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
-		
+		String remember = request.getParameter("remember") == null ? "off" : "on";
 		String idList[] = {"hkd1234S", "kms1234C", "lkj1234J", "adminI", "atom1234I", "btom1234J", "ctom1234C"};
 		String viewPage = "";
+		String id = request.getParameter("mid");
+		
+		Cookie cookieMid = new Cookie("cMid", mid);
+		cookieMid.setPath("/");
+		
+		if(remember.equals("on")) {
+			cookieMid.setMaxAge(60*60);
+		}
+		else {
+			cookieMid.setMaxAge(0);
+		}
+		  response.addCookie(cookieMid);
 		
 		for(int i = 0; i < idList.length; i++){
 			if(idList[i].equals(mid) && pwd.equals("1234")){
+				id = idList[i];
 				if(mid.substring(mid.length()-1).equals("I")){
 					viewPage = "/study/exam/t02_login/t02_resI.jsp";
 				}

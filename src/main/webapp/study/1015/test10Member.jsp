@@ -14,7 +14,7 @@
 
 </head>
 <body>
-<%@ include file="testHeader.jsp" %>
+<%-- <%@ include file="testHeader.jsp" %> --%>
 <p><br/></p>
 <div class="container" style="height: 712px">
   <h2>이곳은 회원 전용방 입니다.(<font color="red"><b><%=mid%></b></font>)</h2>
