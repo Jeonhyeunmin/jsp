@@ -81,7 +81,8 @@
 			
 			6-1 substringAfter() :
 			${fn: substringAfter(str, 'o')}  / ${fn: substringBefore(str, 'o')}<br>
-			6-2 str변수의 2번째 'o'문자의 위치만 구하시오. <br>
+			<hr>
+			6-2 ${str}문자의 2번째 'o'문자의 위치만 구하시오. <br>
 			<c:set var="cnt" value="0"/>
 			<c:forEach var="i" begin="0" end="${fn: length(str)-1}">
 				<c:if test="${fn: substring(str, i, i+1) == 'o'}"><c:set var="cnt" value="${cnt+1}"/></c:if>
@@ -107,9 +108,9 @@
 			<%= str.replace("o", "O") %> / ${fn: replace(str, 'o', 'O')}
 			<br>
 			
-			9. 문자의 포함유무? contains() <br>
+<%-- 			9. 문자의 포함유무? contains() <br>
 			str 변수의 'My'의 포함 유무 : ${fn: contains(str, "My"} <br>
-			str 변수의 'my'의 포함 유무 : ${fn: contains(str, "my"} <br>
+			str 변수의 'my'의 포함 유무 : ${fn: contains(str, "my"} <br> --%>
 			
 			
 		</div>
