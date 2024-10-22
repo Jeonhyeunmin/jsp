@@ -9,6 +9,8 @@
 	<jsp:include page="/include/bs4.jsp"/>
 </head>
 	<body>
+	<jsp:include page="/include/Header.jsp"/>
+	<jsp:include page="/include/nav.jsp"/>
 	<p><br/></p>
 	<div class="container">
 	<h2>vo 자료 출력</h2>
@@ -17,5 +19,6 @@
 	  	
 	</div>
 	<p><br/></p>
+	<jsp:include page="/include/Footer.jsp"/>
 	</body>
 </html>

@@ -7,6 +7,8 @@
 	<jsp:include page="/include/bs4.jsp"/>
 </head>
 	<body>
+	<jsp:include page="/include/Header.jsp"/>
+	<jsp:include page="/include/nav.jsp"/>
 	<p><br/></p>
 	<div class="container">
   	<h2>서블릿에서 '세션/어플리케이션' 처리하기</h2>
@@ -19,5 +21,6 @@
   	<p>어플리케이션 아이디 : ${aMid}</p>
 	</div>
 	<p><br/></p>
+	<jsp:include page="/include/Footer.jsp"/>
 	</body>
 </html>

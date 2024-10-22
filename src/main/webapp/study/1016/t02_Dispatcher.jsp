@@ -49,12 +49,12 @@
     <div>비밀번호를 입력하시요
       <input type="password" name="pwd" id="pwd" value="1234" class="form-control mb-2" required />
     </div>
+  </form>
     <div>
       <button type="submit" class="form-control btn-success mb-2">로그인1</button>
       <button type="button" onclick="fCheck()" class="form-control btn-info mb-2">로그인2</button>
       <button type="reset" class="form-control btn-warning mb-2">다시입력</button>
     </div>
-  </form>
 </div>
 <p><br/></p>
 </body>

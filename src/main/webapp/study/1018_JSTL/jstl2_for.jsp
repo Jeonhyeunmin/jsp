@@ -14,6 +14,8 @@ infix(L > root > R)	A = B * C
 	<jsp:include page="/include/bs4.jsp"/>
 </head>
 	<body>
+	<jsp:include page="/include/Header.jsp"/>
+	<jsp:include page="/include/nav.jsp"/>
 	<p><br/></p>
 	<div class="container">
   	<h3>JSTL반복문(core 라이브러리 사용 : forEach문)</h3>
@@ -136,5 +138,6 @@ infix(L > root > R)	A = B * C
 	</c:forEach>
 	</div>
 	<p><br/></p>
+	<jsp:include page="/include/Footer.jsp"/>
 	</body>
 </html>

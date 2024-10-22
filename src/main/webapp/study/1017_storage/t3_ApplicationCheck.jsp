@@ -16,6 +16,8 @@
   <jsp:include page="/include/bs4.jsp" />
 </head>
 <body>
+	<jsp:include page="/include/Header.jsp"/>
+	<jsp:include page="/include/nav.jsp"/>
 <p><br/></p>
 <div class="container">
   <h2>저장된 어플리케이션 확인</h2>
@@ -28,5 +30,6 @@
   <p><a href="t3_Application.jsp" class="btn btn-info">돌아가기</a></p>
 </div>
 <p><br/></p>
+	<jsp:include page="/include/Footer.jsp"/>
 </body>
 </html>

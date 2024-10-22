@@ -8,12 +8,10 @@
 </head>
 <%
 	Cookie[] cookies = request.getCookies();
-	String check = "";
 	for (int i = 0; i < cookies.length; i++) {
 		if (cookies[i].getName().equals("cMid")) {
 			pageContext.setAttribute("mid", cookies[i].getValue());
-			check = "checked";
-			pageContext.setAttribute("check", check);
+			pageContext.setAttribute("check", "checked");
 		}
 	}
 %>
