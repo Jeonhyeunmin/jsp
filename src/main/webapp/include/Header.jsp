@@ -3,8 +3,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
-<div class="jumbotron text-center" style="margin-bottom:0; height: 170px; margin: 0px; line-height: 30px; padding-top: 30px">
-  <h1 style="font-family: 'Lobster', cursive;"><a href="${ctp}/" style="color: black">Hy_.Min</a></h1>
-  <p style="font-size: 20px;">Welcome to Hy_.min Page</p> 
-  <p>(현재 웹 사이트는 반응형으로 제작되었습니다.)</p> 
+<div class="jumbotron text-center" style="margin-bottom:0; height: 170px; margin: 0px; line-height: 30px; padding-top: 40px">
+  <h1 style="font-size: 50px; font-family: 'Lobster', cursive;"><a href="${ctp}/" style="color: black">Hy_.Min</a></h1>
+  <p style="font-size: 25px; font-family: 'Lobster', cursive;">Welcome to HyeunMin Page</p>
 </div>

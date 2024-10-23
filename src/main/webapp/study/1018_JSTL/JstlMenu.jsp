@@ -17,9 +17,9 @@
    <hr/>
    <div>
       <a href="${ctp}/study/1018_JSTL/jstl2_for.jsp" class="form-control btn-success mb-2">for</a>
-      <a href="${ctp}/study/1018_JSTL/jstl3_vo.jsp" class="form-control btn-success mb-2">vo</a>
-      <a href="${ctp}/study/1018_JSTL/jstl4_function.jsp" class="form-control btn-success mb-2" >function</a>
-      <a href="${ctp}/study/1018_JSTL/jstl5_format.jsp" class="form-control btn-success mb-2">format</a>
+      <a href="${ctp}/study/1018_JSTL/jstl3_vo.jsp" class="form-control btn-primary mb-2">vo</a>
+      <a href="${ctp}/study/1018_JSTL/jstl4_function.jsp" class="form-control btn-info mb-2" >function</a>
+      <a href="${ctp}/study/1018_JSTL/jstl5_format.jsp" class="form-control btn-secondary mb-2">format</a>
    </div>
 </div>
 <p><br/></p>

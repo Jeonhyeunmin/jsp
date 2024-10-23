@@ -11,7 +11,7 @@
 	<div class="jumbotron text-center" style="margin-bottom:0; padding: 0;">
 		<div style="width: 100%; background-color: #1e2026;">
 			<br>
-			<div style="text-align: left; padding-top:5px; margin-left: 180px">
+			<div style="text-align: left; padding-top:5px; margin-left: 10%">
 				<div class="input-group" style="font-size: 20px;">
 					<div><a href="" style="color: gray; padding-left: 10px">회사소개</a></div>
 					<div><a href="" style="color: gray; padding-left: 10px">이용약관</a></div>

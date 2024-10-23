@@ -13,10 +13,10 @@ import javax.servlet.annotation.WebFilter;
 @WebFilter("/*")
 public class EncodingFilter implements Filter{
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		System.out.println("이곳은 init 메소드 입니다.");
-	}
+//	@Override
+//	public void init(FilterConfig filterConfig) throws ServletException {
+//		System.out.println("이곳은 init 메소드 입니다.");
+//	}
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

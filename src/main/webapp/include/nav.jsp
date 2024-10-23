@@ -25,7 +25,8 @@
 			      Study1
 			    </button>
 			    <div class="dropdown-menu">
-			      <a class="dropdown-item" href="${ctp}/study/mapping/Test1">mapping</a>
+			      <a class="dropdown-item" href="${ctp}/study/mapping/Test1">mapping(Directory Pattern)</a>
+			      <a class="dropdown-item" href="${ctp}/study/mapping/Test2">mapping(Extension Pattern)</a>
 			      <a class="dropdown-item" href="${ctp}/study/mapping/Storage">세션연습</a>
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/el.jsp">EL</a>
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/JstlMenu.jsp">JSTL 연습</a>
