@@ -4,7 +4,8 @@
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <a class="navbar-brand" href="${ctp}/">HOME</a>
+  <%-- <a class="navbar-brand" href="${ctp}/">HOME</a> --%>
+  <a class="navbar-brand" href="http://192.168.50.56:9090/javaGroup">HOME</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
