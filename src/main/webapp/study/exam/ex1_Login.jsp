@@ -43,7 +43,7 @@
 <body>
 <p><br/></p>
 <div class="container">
-<h2 class="text-center">로그인</h2>
+	<h2 class="text-center">로그인</h2>
 	<form name="myform" method="post" action="${ctp}/exam/Ex1LoginOk">
 		<table class="table table-bordered">
 	    <tr>

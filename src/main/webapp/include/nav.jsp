@@ -31,6 +31,7 @@
 			      <a class="dropdown-item" href="${ctp}/study/mapping/Storage">세션연습</a>
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/el.jsp">EL</a>
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/JstlMenu.jsp">JSTL 연습</a>
+			      <a class="dropdown-item" href="${ctp}/study/database/DbList">DataBase 연습</a>
 			    </div>
 			  </div>
       </li>    
