@@ -8,10 +8,12 @@
   <title>.jsp</title>
 	<jsp:include page="/include/bs4.jsp"/>
 	<style type="text/css">
-		th{
-			text-align: center;
-			background-color: #eee;
-		}
+		th {
+        text-align: center; /* 가로 가운데 정렬 */
+        vertical-align: middle; /* 세로 가운데 정렬 */
+        background-color: #eee;
+        height: 60px; /* 필요에 따라 높이 조정 */
+    }
 	</style>
 </head>
 	<jsp:include page="/include/Header.jsp"/>

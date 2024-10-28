@@ -20,6 +20,7 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Pds</a>
       </li>
+      <c:if test="${!empty sNickName}">
       <li class="nav-item ml-2">
         <div class="dropdown">
 			    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
@@ -32,9 +33,32 @@
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/el.jsp">EL</a>
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/JstlMenu.jsp">JSTL 연습</a>
 			      <a class="dropdown-item" href="${ctp}/study/database/DbList">DataBase 연습</a>
+			      <a class="dropdown-item" href="PassCheckForm.st">암호화 연습</a>
 			    </div>
 			  </div>
-      </li>    
+      </li>
+	      <li class="nav-item ml-2">
+	        <div class="dropdown">
+				    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+				      MyPage
+				    </button>
+				    <div class="dropdown-menu">
+				      <a class="dropdown-item" href="MemberMain.mem">회원메인방</a>
+				      <a class="dropdown-item" href="#">쪽지보내기</a>
+				      <a class="dropdown-item" href="#">포인트사용내역</a>
+				      <a class="dropdown-item" href="#">일정관리</a>
+				      <a class="dropdown-item" href="MemberUpdate.mem">회원정보수정</a>
+				      <a class="dropdown-item" href="javascript:memberDelete()">회원탈퇴</a>
+				      <a class="dropdown-item" href="#">관리자메뉴</a>
+				    </div>
+				  </div>
+	      </li>
+      </c:if>
+      
+      <li class="nav-item">
+        <c:if test="${!empty sNickName}"><a class="nav-link" href="MemberLogout.mem">Logout</a></c:if>
+        <c:if test="${empty sNickName}"><a class="nav-link" href="MemberLogin.mem">Login</a></c:if>
+      </li>
     </ul>
   </div>
 </nav>
