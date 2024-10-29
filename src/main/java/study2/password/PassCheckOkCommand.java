@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.SecurityUtil;
 import study2.StudyInterface;
 
 public class PassCheckOkCommand implements StudyInterface {
@@ -19,6 +20,7 @@ public class PassCheckOkCommand implements StudyInterface {
 		int salt;
 		int encPwd = 0;
 		int decPwd = 0;
+		String strEncPwd = "";
 		
 		if(flag == 1) {
 			temp = "숫자 비밀번호";
@@ -55,8 +57,13 @@ public class PassCheckOkCommand implements StudyInterface {
 		else if(flag == 3) {
 			
 		}
+		else if(flag == 4) {
+			SecurityUtil security = new SecurityUtil();
+			strEncPwd = security.encryptSHA256(pwd);
+		}
 		
 		request.setAttribute("encPwd", encPwd);
+		request.setAttribute("pwd", strEncPwd);
 		request.setAttribute("decPwd", decPwd);
 		
 	}

@@ -17,13 +17,13 @@
   	<form name="myform" method="post" action="GuestInputOk.gu" class="was-validated">
     <div class="form-group">
       <label for="name">성명</label>
-      <input type="text" class="form-control" id="name" value="${sNickName}" placeholder="이름을 입력해주세요." name="name" autofocus required>
+      <input type="text" class="form-control" id="name" value="${sNickName}" readonly placeholder="이름을 입력해주세요." name="name" autofocus required>
       <div class="valid-feedback">확인</div>
       <div class="invalid-feedback">성명을 입력하세요</div>
     </div>
     <div class="form-group">
       <label for="email">이메일</label>
-      <input type="text" class="form-control" id="email" placeholder="이메일을 작성해주세요." name="email">
+      <input type="text" class="form-control" id="email" value="${email}" placeholder="이메일을 작성해주세요." name="email">
     </div>
     <div class="form-group">
       <label for="homePage">홈페이지</label>
