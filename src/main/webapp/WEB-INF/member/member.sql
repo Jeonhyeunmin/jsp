@@ -42,3 +42,5 @@ update member set todayCnt = 0;
 delete from member where idx >= 2;
 
 alter table member auto_increment = 4;
+
+select max(point) as point, mid, name from member
