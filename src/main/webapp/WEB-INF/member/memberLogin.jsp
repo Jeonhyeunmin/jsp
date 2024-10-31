@@ -24,11 +24,15 @@
   			</div>
   		</div>
 		<div>비밀번호를 입력하세요<input type='password' name='pwd' value="1234" class='form-control mb-2' required/></div>
-  	<div>
+  	<div class="text-center mb-2">
 	  	<button type="submit" class="btn btn-success">로그인</button>
 	  	<button type="reset" class="btn btn-warning">다시 입력</button>
 	  	<button type="button" onclick="location=href='MemberJoin.mem'" class="btn btn-info">회원가입</button>
   	</div>
+  	<div class="text-center">
+		  <a href="#" class="badge badge-secondary">아이디찾기</a> |
+		  <a href="#" class="badge badge-secondary">비밀번호찾기</a>
+		</div>
   </form>
 	</div>
 	<p><br/></p>

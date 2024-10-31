@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import common.SecurityUtil;
+import guest.GuestDAO;
 
 public class MemberLoginOkCommand implements MemberInterface {
 
@@ -75,22 +76,13 @@ public class MemberLoginOkCommand implements MemberInterface {
 		session.setAttribute("sLevel", vo.getLevel());
 		session.setAttribute("sLastDate", vo.getLastDate());	//	최근 방문일을 세션에 저장
 		
-		// 회원등급 별 등급 명칭을 strLevel변수에 저장한다.
-		String strLevel = "";
-		if(vo.getLevel() == 0) {
-			strLevel = "관리자";
-		}
-		else if(vo.getLevel() == 1) {
-			strLevel = "준회원";
-		}
-		else if(vo.getLevel() == 2) {
-			strLevel = "정회원";
-		}
-		else if(vo.getLevel() == 3) {
-			strLevel = "우수회원";
-		}
 		
+		
+		// 회원등급 별 등급 명칭을 strLevel변수에 저장한다.
+		String strLevel = strLevelProcess(vo.getLevel());
 		session.setAttribute("strLevel", strLevel);
+		
+		
 		
 //		 방문포인트 10증가, 방문카운트(총/오늘) 1증가, 마지막날짜(최종방문일자) 수정
 		Date today = new Date();
@@ -108,16 +100,42 @@ public class MemberLoginOkCommand implements MemberInterface {
 			if(vo.getTodayCnt() <= 5) vo.setPoint(vo.getPoint() + 10);
 		}
 		
-
-		
-		
-		
 //		dao.setPointPlus(mid);
 		dao.setMemberInforUpdate(vo);
 		
-		
-		request.setAttribute("message", mid + "님 로그인 되었습니다.");
+	// 준회원인경우 정회원으로 자동등업처리(조건:총방문회수 10회이상, 방명록글수 2개이상)
+			int levelSw = 0;
+			if(vo.getLevel() == 1) {
+				GuestDAO gDao = new GuestDAO();
+				vo = dao.getMemberIdCheck(mid);
+				if(vo.getVisitCnt() >= 10 && gDao.getGuestCnt(mid, vo.getName(), vo.getNickName()) >= 2) {
+					dao.setMemberLevelUpdate(vo.getIdx(), 2);
+					session.setAttribute("sLevel", 2);
+					session.setAttribute("strLevel", strLevelProcess(2));
+					levelSw = 1;
+				}
+			}
+			if(levelSw != 0) request.setAttribute("message", mid + "님 축하합니다.\\n정회원이 되셨습니다.");
+			else request.setAttribute("message", mid + "님 로그인 되었습니다.");
+				
 		request.setAttribute("url", "MemberMain.mem");
+	}
+
+	private String strLevelProcess(int level) {
+		String strLevel = "";
+		if(level == 0) {
+			strLevel = "관리자";
+		}
+		else if(level == 1) {
+			strLevel = "준회원";
+		}
+		else if(level == 2) {
+			strLevel = "정회원";
+		}
+		else if(level == 3) {
+			strLevel = "우수회원";
+		}
+		return strLevel;
 	}
 
 }

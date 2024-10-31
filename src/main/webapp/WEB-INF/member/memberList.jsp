@@ -50,6 +50,7 @@
 		  				<c:if test="${vo.level == 1}">준회원</c:if>
 		  				<c:if test="${vo.level == 2}">정회원</c:if>
 		  				<c:if test="${vo.level == 3}">우수회원</c:if>
+		  				<c:if test="${vo.level == 99}"><font color="red">탈퇴예정회원</font></c:if>
 	  				</td>
 	  				<td>${vo.name}</td>
 	  				<td>${vo.nickName}</td>
@@ -67,7 +68,7 @@
 	  				</c:if>
 					</tr>
 				</c:forEach>
-				<tr><td colspan="5" class="m-0 p-0"></td></tr>
+				<tr><td colspan="8" class="m-0 p-0"></td></tr>
   		</table>
   	</div>
   	<div class="input-group mt-1 mb-3">

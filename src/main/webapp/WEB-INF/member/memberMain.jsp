@@ -17,14 +17,17 @@
   	<h2>회 원 전 용 방</h2>
   	<hr>
   	<div>현재 <font size="5px"><b>${sNickName}</b></font>(<font color="red"><b>${strLevel}</b></font>) 님 로그인 중입니다.</div>
-  	<hr>
+  	<hr/>
+  	<c:if test="${sLevel == 1}">
+  		<div><font color="red">정회원 등업조건 :총 방문횟수 <b>10회</b>이상, 방명록에 글쓰기 <b>2회</b> 이상</font></div>
+  	</c:if>
   	<div>총 방문 횟수 : <font color="red"><b>${mVo.visitCnt}</b></font></div>
   	<div>오늘 방문 횟수 :  <font color="red"><b>${mVo.todayCnt}</b></font></div>
   	<div>최종 방문일 : <font color="red"><b>${fn:substring(sLastDate,0,19)}</b></font></div>
   	<div>총 포인트 :  <font color="red"><b>${mVo.point}</b></font></div>
   	<hr>
 		<!-- 이름 아이디 닉네임이 같아야 내가 쓴걸로 간주 -->
-  	<div>방명록에 작성한 글 수 :  <font color="red">총 <b>__</b>건</font></div>
+  	<div>방명록에 작성한 글 수 :  <font color="red">총 <b><a href="" target="_blank" style="color: red">${guestCnt}</a></b>건</font></div>
   	<hr>
   	<div>회원 사진 <img src="${ctp}/images/member/${mVo.photo}" width="300px"/> </div>
 	</div>

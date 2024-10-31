@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import guest.GuestDAO;
+
 public class MemberMainCommand implements MemberInterface {
 
 	@Override
@@ -20,6 +22,9 @@ public class MemberMainCommand implements MemberInterface {
 		
 		request.setAttribute("mVo", mVo);
 		
-//		
+//		방명록에 글 올린 횟수 담아오기
+		GuestDAO gDao = new GuestDAO(); 
+		int guestCnt = gDao.getGuestCnt(mVo.getMid(), mVo.getName(), mVo.getNickName());
+		request.setAttribute("guestCnt", guestCnt);
 	}
 }
