@@ -8,8 +8,6 @@
   <title>adminContent.jsp</title>
 	<jsp:include page="/include/bs4.jsp"/>
 </head>
-	<jsp:include page="/include/Header.jsp"/>
-	<jsp:include page="/include/nav.jsp"/>
 	<body>
 	<p><br/></p>
 	<div class="container">
@@ -27,6 +25,5 @@
   	 <p>탈퇴 신청 회원 : <b><a href="">${boardCnt}건</a></b></p>
 	</div>
 	<p><br/></p>
-	<jsp:include page="/include/Footer.jsp"/>
 	</body>
 </html>

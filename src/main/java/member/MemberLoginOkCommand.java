@@ -2,6 +2,7 @@ package member;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import common.SecurityUtil;
 import guest.GuestDAO;
+import guest.GuestVO;
 
 public class MemberLoginOkCommand implements MemberInterface {
 
@@ -108,17 +110,18 @@ public class MemberLoginOkCommand implements MemberInterface {
 			if(vo.getLevel() == 1) {
 				GuestDAO gDao = new GuestDAO();
 				vo = dao.getMemberIdCheck(mid);
-				if(vo.getVisitCnt() >= 10 && gDao.getGuestCnt(mid, vo.getName(), vo.getNickName()) >= 2) {
+				ArrayList<GuestVO> gVos = gDao.getGuestCnt(mid, vo.getName(), vo.getNickName());
+				if(vo.getVisitCnt() >= 10 && gVos.size() >= 2) {
 					dao.setMemberLevelUpdate(vo.getIdx(), 2);
 					session.setAttribute("sLevel", 2);
-					session.setAttribute("strLevel", strLevelProcess(2));
+					session.setAttribute("sStrLevel", strLevelProcess(2));
 					levelSw = 1;
 				}
 			}
 			if(levelSw != 0) request.setAttribute("message", mid + "님 축하합니다.\\n정회원이 되셨습니다.");
 			else request.setAttribute("message", mid + "님 로그인 되었습니다.");
 				
-		request.setAttribute("url", "MemberMain.mem");
+			request.setAttribute("url", "MemberMain.mem");
 	}
 
 	private String strLevelProcess(int level) {

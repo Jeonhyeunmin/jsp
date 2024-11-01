@@ -1,6 +1,7 @@
 package member;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import guest.GuestDAO;
+import guest.GuestVO;
 
 public class MemberMainCommand implements MemberInterface {
 
@@ -24,7 +26,10 @@ public class MemberMainCommand implements MemberInterface {
 		
 //		방명록에 글 올린 횟수 담아오기
 		GuestDAO gDao = new GuestDAO(); 
-		int guestCnt = gDao.getGuestCnt(mVo.getMid(), mVo.getName(), mVo.getNickName());
-		request.setAttribute("guestCnt", guestCnt);
+		
+	// 방명록에 글 올린 자료 담아오기
+			ArrayList<GuestVO> gVos = gDao.getGuestCnt(mVo.getMid(),mVo.getName(),mVo.getNickName());
+			request.setAttribute("guestCnt", gVos.size());
+			request.setAttribute("gVos", gVos);
 	}
 }

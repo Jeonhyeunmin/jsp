@@ -11,13 +11,33 @@ public class MemberListCommand implements MemberInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("name") == null ? "" : request.getParameter("name");
 		
 		MemberDAO dao = new MemberDAO();
 		
-		ArrayList<MemberVO> vos = dao.getMemberListCommand(name);
+
+		int pag = request.getParameter("pag") == null ? 1 : Integer.parseInt(request.getParameter("pag"));
+		int pageSize = request.getParameter("pageSize") == null ? 5 : Integer.parseInt(request.getParameter("pagSize"));
+		int totRecCnt = dao.getTotRecCnt(999);
+		int totPage = (totRecCnt % pageSize) == 0 ? (totRecCnt / pageSize) : (totRecCnt / pageSize) +1;
+		int startIndexNo = (pag - 1) * pageSize;
+		int curScrStartNo = totRecCnt - startIndexNo;
+		
+		ArrayList<MemberVO> vos =  dao.getMemberListCommand(startIndexNo, pageSize,"" ,999);
+		request.setAttribute("vos", vos);
+		
+		int blockSize = 3;
+		int curBlock = (pag-1) / blockSize;
+		int lastBlock = (totPage - 1) / blockSize;
 		
 		request.setAttribute("vos", vos);
+		request.setAttribute("pag", pag);
+		request.setAttribute("pageSize", pageSize);
+		request.setAttribute("totRecCnt", totRecCnt);
+		request.setAttribute("totPage", totPage);
+		request.setAttribute("curScrStartNo", curScrStartNo);
+		request.setAttribute("blockSize", blockSize);
+		request.setAttribute("curBlock", curBlock);
+		request.setAttribute("lastBlock", lastBlock);
 	}
 
 }
