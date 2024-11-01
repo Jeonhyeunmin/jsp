@@ -157,9 +157,9 @@
 		
   	<!-- 블록페이지 끝 -->
 			<!-- 사용자 페이지 설정 -->  		
-  	<li class="form-control float-right">
+  	<li class="float-right">
 		  <form action="#">
-		    <select class="form-control" style="width: 150px;" name="pageSize" id="pageSize" onchange="pageSizeChange()">
+		    <select class="form-control float-right" style="width: 150px;" name="pageSize" id="pageSize" onchange="pageSizeChange()">
 		      <option <c:if test="${pageSize == 3}">selected</c:if>>3</option>
 		      <option <c:if test="${pageSize == 5}">selected</c:if>>5</option>
 		      <option <c:if test="${pageSize == 10}">selected</c:if>>10</option>
