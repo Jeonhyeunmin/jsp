@@ -1,4 +1,4 @@
-package admin;
+package board;
 
 import java.io.IOException;
 
@@ -10,62 +10,66 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import admin.member.MemberDeleteCommand;
-import admin.member.MemberDetailViewCommand;
-import admin.member.MemberLevelChangeCommand;
-import admin.member.MemberListCommand;
 import study2.ajax.AjaxIdCheck0Command;
 import study2.ajax.AjaxIdCheck1Command;
 import study2.ajax.AjaxPointCheckCommand;
 import study2.password.PassCheckOkCommand;
 
 
-@WebServlet("*.ad")
-public class AdminController extends HttpServlet{
+@WebServlet("*.bo")
+public class BoardController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		AdminInterface command = null;
+		BoardInterface command = null;
 		
-		String viewPage = "/WEB-INF/admin";
+		String viewPage = "/WEB-INF/board";
 		
 		String com = request.getRequestURI();
 		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));
 		
-//		인증처리..(Spring에서는 aop의 개념)
 		HttpSession session = request.getSession();
 		int level = session.getAttribute("sLevel") == null ? 999 : (int)session.getAttribute("sLevel");
 		
-		if(level != 0) {
+		if(level > 4) {
 			request.setAttribute("message", "로그인 후 사용하세요.");
 			request.setAttribute("url", "/MemberLogin.mem");
 			viewPage = "/include/message.jsp";
 		}
-		else if(com.equals("/AdminMain")) {
-			viewPage += "/adminMain.jsp";
+		else if(level == 1) {
+			request.setAttribute("message", "정회원부터 사용가능합니다.");
+			request.setAttribute("url", "/BoardList.bo");
+			viewPage = "/include/message.jsp";
 		}
-		else if(com.equals("/AdminLeft")) {
-			viewPage += "/adminLeft.jsp";
-		}
-		else if(com.equals("/AdminContent")) {
-			viewPage += "/adminContent.jsp";
-		}
-		else if(com.equals("/MemberList")) {
-			command = new MemberListCommand();
+		else if(com.equals("/BoardList")) {
+			command = new BoardListCommand();
 			command.execute(request, response);
-			viewPage += "/member/memberList.jsp";
+			viewPage += "/boardList.jsp";
 		}
-		else if(com.equals("/MemberLevelChange")) {
-			command = new MemberLevelChangeCommand();
+		else if(com.equals("/BoardInput")) {
+			viewPage += "/boardInput.jsp";
+		}
+		else if(com.equals("/BoardInputOk")) {
+			command = new BoardInputOkCommand();
 			command.execute(request, response);
-			return;
+			viewPage = "/include/message.jsp";
 		}
-		else if(com.equals("/MemberDetailView")) {
-			command = new MemberDetailViewCommand();
+		else if(com.equals("/BoardContent")) {
+			command = new BoardContentCommand();
 			command.execute(request, response);
-			viewPage += "/member/memberDetailView.jsp";
+			viewPage += "/boardContent.jsp";
 		}
-		else if(com.equals("/MemberDelete")) {
-			command = new MemberDeleteCommand();
+		else if(com.equals("/BoardUpdate")) {
+			command = new BoardUpdateCommand();
+			command.execute(request, response);
+			viewPage += "/boardUpdate.jsp";
+		}
+		else if(com.equals("/BoardUpdateOk")) {
+			command = new BoardUpdateOkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/BoardDelete")) {
+			command = new BoardDeleteCommand();
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}

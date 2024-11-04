@@ -24,7 +24,7 @@
         <a class="nav-link" href="GuestList.gu">Guest</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Board</a>
+        <a class="nav-link" href="BoardList.bo">Board</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Pds</a>

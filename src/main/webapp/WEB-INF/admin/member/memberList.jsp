@@ -23,15 +23,16 @@
 		}
 		
 		function levelChange(e) {
-			let ans = confirm("선택한 회원의 등급을 변경하시겠습니까?");
-			if(!ans){
-				location.reload();
-				return false;
-			}
-			
-			let items = e.value.split("/");
-///			alert("레벨 : " + e.value);
-			$.ajax({
+	    	//let level = document.getElementById("level").value;
+	    	let ans = confirm("선택한 회원의 등급을 변경하시겠습니까?");
+	    	if(!ans) {
+	    		location.reload();
+	    		return false;
+	    	}
+	    	//alert("레벨 : " + e.value);
+	    	let items = e.value.split("/");
+	    	
+	    	$.ajax({
 	    		type : "post",
 	    		url  : "MemberLevelChange.ad",
 	    		data : {
@@ -49,7 +50,7 @@
 	    			alert("전송오류!");
 	    		}
 	    	});
-		}
+    }
 		
 		function levelViewCheck(){
 			let level = document.getElementById("levelView").value;
@@ -59,6 +60,17 @@
 		function pageSizeChange(){
 			let pageSize = document.getElementById("pageSize").value;
 			location.href = "MemberList.ad?pageSize=" + pageSize + "&pag=${pag}&level=${level}";
+		}
+		
+		function memberDelete(idx) {
+			let ans = confirm("탈퇴 신청 30일 지난 회원입니다 정보 삭제하시겠습니까?");
+			if(ans){
+				location.href="MemberDelete.ad?idx=" + idx + "&pag=${pag}";
+			}
+			else{
+				location.href="MemberList.ad";
+			}
+			
 		}
 	</script>
 </head>
@@ -111,6 +123,9 @@
 	  				<td>
 		  				<c:if test="${vo.userDel == 'NO'}">활동 중</c:if>
 		  				<c:if test="${vo.userDel != 'NO'}"><font color="red">탈퇴 신청(${vo.elapsed_date}일)</font></c:if>
+		  				<c:if test="${vo.userDel != 'NO' && vo.elapsed_date >= 30}">
+		  					<input type="button" value="회원삭제" class="btn btn-outline-danger" onclick="memberDelete(${vo.idx})">
+							</c:if>
 	  				</td>
 	  				<td>
 	  					<select name="level" id="level" onchange="levelChange(this)">
@@ -118,7 +133,7 @@
 	  						<option value="1/${vo.idx}" ${vo.level == 1 ? 'selected' : ''}>준회원</option>
 	  						<option value="2/${vo.idx}" ${vo.level == 2 ? 'selected' : ''}>정회원</option>
 	  						<option value="3/${vo.idx}" ${vo.level == 3 ? 'selected' : ''}>우수회원</option>
-	  						<option value="4/${vo.idx}" ${vo.level == 99 ? 'selected' : ''}>탈퇴예정회원</option>
+	  						<option value="99/${vo.idx}" ${vo.level == 99 ? 'selected' : ''}>탈퇴예정회원</option>
 	  					</select>
 	  				</td>
 					</tr>
@@ -126,7 +141,7 @@
 				<tr><td colspan="9" class="m-0 p-0"></td></tr>
   		</table>
   		
-  		  	<!-- 블록페이지 시작 -->
+  	<!-- 블록페이지 시작 -->
   	<ul class="pagination justify-content-center">
 			<li class="page-item">
 				<c:if test="${pag > 1}"><a class="page-link  text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=1">첫 페이지</a></c:if>
@@ -136,8 +151,6 @@
 				<c:if test="${curBlock > 0}"><a class="page-link  text-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></c:if>
 				<c:if test="${curBlock <= 0}"><span class="page-link disabled text-secondary">이전블록</span></c:if>
       </li>
-			
-			<%-- <li class="page-item"><c:if test="${curBlock > 0}"><a class="page-link" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></c:if></li> --%>
 			
 		  <c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize) + blockSize}" varStatus="st">
 		    <c:if test="${i <= totPage && i == pag}"><li class="page-item active"><a class="page-link bg-secondary border-secondary" href="MemberList.ad?level=${level}&pageSize=${pageSize}&pag=${i}">${i}</a></li></c:if>
@@ -157,17 +170,17 @@
 		
   	<!-- 블록페이지 끝 -->
 			<!-- 사용자 페이지 설정 -->  		
-  	<li class="float-right">
-		  <form action="#">
-		    <select class="form-control float-right" style="width: 150px;" name="pageSize" id="pageSize" onchange="pageSizeChange()">
-		      <option <c:if test="${pageSize == 3}">selected</c:if>>3</option>
-		      <option <c:if test="${pageSize == 5}">selected</c:if>>5</option>
-		      <option <c:if test="${pageSize == 10}">selected</c:if>>10</option>
-		      <option <c:if test="${pageSize == 15}">selected</c:if>>15</option>
-		      <option <c:if test="${pageSize == 20}">selected</c:if>>20</option>
-		      <option <c:if test="${pageSize == 30}">selected</c:if>>30</option>
-		    </select>
-		  </form>
+  	<li class="float-right" style="float: right;">
+    <form action="#">
+        <select class="form-control" style="width: 150px;" name="pageSize" id="pageSize" onchange="pageSizeChange()">
+            <option <c:if test="${pageSize == 3}">selected</c:if>>3</option>
+            <option <c:if test="${pageSize == 5}">selected</c:if>>5</option>
+            <option <c:if test="${pageSize == 10}">selected</c:if>>10</option>
+            <option <c:if test="${pageSize == 15}">selected</c:if>>15</option>
+            <option <c:if test="${pageSize == 20}">selected</c:if>>20</option>
+            <option <c:if test="${pageSize == 30}">selected</c:if>>30</option>
+        </select>
+    </form>
 		</li>
 	</ul>
   	

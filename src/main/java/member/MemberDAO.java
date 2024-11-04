@@ -392,4 +392,19 @@ public ArrayList<MemberVO> getMemberListCommand(int startIndexNo, int pageSize, 
 		}
 		return vo;
 	}
+
+	public int MemberDelete(int idx) {
+		int res = 0;
+		try {
+			sql = "delete from member where idx=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		}	finally {
+			pstmtClose();
+		}
+		return res;
+	}
 }
