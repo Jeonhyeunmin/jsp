@@ -5,7 +5,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>boardList.jsp</title>
+  <title>boardSearchList.jsp</title>
   <jsp:include page="/include/bs4.jsp"/>
   <script src="https://kit.fontawesome.com/0c69fdf2c0.js" crossorigin="anonymous"></script>
   <style>
@@ -45,9 +45,12 @@
   <p><br/></p>
   <div class="container">
     <h2 class="text-center">게 시 판 리 스 트</h2>
+    <div class="text-center">
+    	(<font color="blue">${searchTitle}</font>을 통해 <font color="red"><b>${searchString}</b></font>을 검색한 결과는 총 <font color="red"><b>${searchCnt}</b></font>건 입니다)
+    </div>
     <table class="table table-borderless">
       <tr>
-        <td class="p-0 m-0"><a href="BoardInput.bo" class="btn btn-success btn-sm">글쓰기</a></td>
+        <td class="p-0 m-0"><a href="BoardList.bo" class="btn btn-success btn-sm">돌아가기</a></td>
       </tr>
     </table>
     <table class="table table-hover text-center">
@@ -59,7 +62,8 @@
         <th>조회수</th>
         <th>좋아요</th>
       </tr>
-      <c:set var="curScrStartNo" value="${curScrStartNo}"/>
+      <%-- <c:set var="curScrStartNo" value="${curScrStartNo}"/> --%>
+      <c:set var="curScrStartNo" value="${searchCnt}"/>
       <c:forEach var="vo" items="${vos}" varStatus="st">
         <c:if test="${vo.openSw == '공개' || sMid == vo.mid || sLevel == 0}">
           <tr>
@@ -67,15 +71,15 @@
             <td class="text-left">
             	<c:if test="${vo.claim == 'NO' || sMid == vo.mid || sLevel == 0}"><a href="BoardContent.bo?idx=${vo.idx}&pag=${pag}">${vo.title}</a></c:if>
             	<c:if test="${vo.claim != 'NO' && sMid != vo.mid && sLevel != 0}"><a href="javascript:alert('현재 글은 신고된 글입니다.')">${vo.title}</a></c:if>
-            	<c:if test="${vo.time_diff <= 24}"><img src="${ctp}/images/new.gif"></c:if>
           	</td>
             <td>${vo.nickName}</td>
-            <td>${vo.wDate.substring(0,10)}</td>
+            <td>${vo.wDate}</td>
             <td>${vo.readNum}</td>
             <td><i class="fa-regular fa-heart" style="color: red;"></i> ${vo.good}</td>
           </tr>
         </c:if>
         <c:set var="curScrStartNo" value="${curScrStartNo-1}"/>
+        <%-- <c:set var="curScrStartNo" value="${curScrStartNo-1}"/> --%>
       </c:forEach>
       <tr><td colspan="6" class="m-0 p-0"></td></tr>
     </table>

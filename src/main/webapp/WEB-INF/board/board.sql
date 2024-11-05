@@ -18,3 +18,6 @@ create table board(
 );
 
 insert into board values (default, 'admin', '관리인', '게시판 서비스를 시작합니다.', '공개 게시판입니다 많관부', '192.168.50.56', default, default, default, default, default);
+
+select idx, mid, title, datediff(wDate, now()) as date_diff from board order by idx desc;
+select idx, mid, title, timestampdiff(hour, wDate, now()) as time_diff from board order by idx desc;
