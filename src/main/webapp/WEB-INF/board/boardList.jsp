@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -37,13 +38,23 @@
     function cursorMove(){
     	document.getElementById("searchString").focus();
     }
+    
+    function contentView(content) {
+    	$("#myModal #modalContent").html(content);
+    	/* 
+    	$("#myModal").modal({
+        fadeDuration: 1000,
+        fadeDelay: 0.5,
+      });
+    	*/
+    }
   </script>
 </head>
 <jsp:include page="/include/Header.jsp"/>
 <jsp:include page="/include/nav.jsp"/>
 <body>
   <p><br/></p>
-  <div class="container">
+  <div class="container-xl">
     <h2 class="text-center">게 시 판 리 스 트</h2>
     <table class="table table-borderless">
       <tr>
@@ -52,9 +63,9 @@
     </table>
     <table class="table table-hover text-center">
       <tr>
-        <th>글번호</th>
-        <th>글 제목</th>
-        <th>글쓴이</th>
+        <th style="width: 100px;">글번호</th>
+        <th style="width: 500px;">글 제목</th>
+        <th style="width: 80px;">글쓴이</th>
         <th>글쓴 날짜</th>
         <th>조회수</th>
         <th>좋아요</th>
@@ -68,9 +79,12 @@
             	<c:if test="${vo.claim == 'NO' || sMid == vo.mid || sLevel == 0}"><a href="BoardContent.bo?idx=${vo.idx}&pag=${pag}">${vo.title}</a></c:if>
             	<c:if test="${vo.claim != 'NO' && sMid != vo.mid && sLevel != 0}"><a href="javascript:alert('현재 글은 신고된 글입니다.')">${vo.title}</a></c:if>
             	<c:if test="${vo.time_diff <= 24}"><img src="${ctp}/images/new.gif"></c:if>
+            	<c:if test="${vo.replyCnt != 0}">(${vo.replyCnt})</c:if>
           	</td>
-            <td>${vo.nickName}</td>
-            <td>${vo.wDate.substring(0,10)}</td>
+  		      <td><a href="#" onclick='contentView("${vo.content}")' data-toggle="modal" data-target="#myModal">${vo.nickName}</a></td>
+            <td>	<!-- 24시간이 넘으면 날짜만, 24시간 이내라도 오늘날짜는 시간만, 어제날짜는 날짜와시간을 출력 -->
+		        	${vo.time_diff > 24 ? fn:substring(vo.wDate,0,10) : vo.date_diff == 0 ? fn:substring(vo.wDate,11,19) : fn:substring(vo.wDate,0,19)}
+		      	</td>
             <td>${vo.readNum}</td>
             <td><i class="fa-regular fa-heart" style="color: red;"></i> ${vo.good}</td>
           </tr>
@@ -113,7 +127,6 @@
       </ul>
       
       <!-- 사용자 페이지 설정 -->
-        
           <select class="form-control" style="width: 100px; display: inline-block;" name="pageSize" id="pageSize" onchange="pageSizeChange()">
             <option <c:if test="${pageSize == 3}">selected</c:if>>3</option>
             <option <c:if test="${pageSize == 5}">selected</c:if>>5</option>
@@ -144,6 +157,24 @@
     </div>
     
     <!-- 검색기 끝 -->
+    
+    <!-- The Modal -->
+	<div class="modal fade" id="myModal">
+	  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h3 class="modal-title">자기소개</h3>
+	        <button type="button" class="close" data-dismiss="modal">×</button>
+	      </div>
+	      <div class="modal-body">
+	        <span id="modalContent"></span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
   <p><br/></p>
   <jsp:include page="/include/Footer.jsp"/>
 </body>

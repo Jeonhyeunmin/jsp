@@ -117,6 +117,102 @@
     		}
     	});
     }
+ 
+ // 댓글 달기
+    function replyCheck() {
+    	let content = $("#content").val();
+    	if(content.trim() == "") {
+    		alert("댓글을 입력하세요");
+    		return false;
+    	}
+    	let query = {
+    			boardIdx 	: ${vo.idx},
+    			mid 			: '${sMid}',
+    			nickName 	: '${sNickName}',
+    			content   : content,
+    			hostIp    : '${pageContext.request.remoteAddr}'
+    	}
+    	
+    	$.ajax({
+    		type : "post",
+    		url  : "BoardReplyInput.bo",
+    		data : query,
+    		success:function(res) {
+    			if(res != "0") {
+    				alert("댓글이 입력되었습니다.");
+//    				location.reload();
+						$("#replyViewList").load(location.href + ' #replyViewList');
+    			}
+    			else alert("댓글 입력 실패!!");
+    		},
+    		error : function() {
+    			alert("전송 오류!");
+    		}
+    	});
+    }
+ 		function replyDeleteCheck(idx) {
+			let ans = confirm("선택한 댓글을 삭제하시겠습니까?");
+			if(!ans){
+				return false;
+			}
+			
+			$.ajax({
+				type:"post",
+				url:"BoardReplyDelete.bo",
+				data:{idx:idx},
+				success: function(res) {
+					if(res != "0"){
+						alert("댓글이 삭제되었습니다.");
+						location.reload();
+					}
+					else{
+						alert("삭제 실패");
+					}
+				},
+				error: function() {
+					alert("전송오류");
+				}
+			});
+		}
+ 		
+ 	// 댓글 수정창 보여주기
+    function replyDeleteUpdateCheck(idx) {
+    	$(".replyUpdateForm").hide();
+    	$("#replyUpdateForm"+idx).show();
+    }
+ 	
+//	댓글 수정 	
+ 	function replyUpdateCheck(idx){
+ 		let content = $("#content"+idx).val();
+    	if(content.trim() == "") {
+    		alert("댓글을 입력하세요");
+    		return false;
+    	}
+    	let query = {
+    			idx 	: idx,
+    			content   : content,
+    			hostIp    : '${pageContext.request.remoteAddr}'
+    	}
+    	
+    	$.ajax({
+    		type : "post",
+    		url  : "BoardReplyUpdate.bo",
+    		data : query,
+    		success:function(res) {
+    			if(res != "0") {
+    				alert("댓글이 수정되었습니다.");
+    				location.reload();
+    			}
+    			else alert("댓글 수정 실패!!");
+    		},
+    		error : function() {
+    			alert("전송 오류!");
+    		}
+    	});
+	}
+	function replyUpdateViewClose(idx) {
+		$("#replyUpdateForm"+ idx).hide();
+	}
 </script>
 </head>
 <jsp:include page="/include/Header.jsp"/>
@@ -126,20 +222,20 @@
 <div class="container">
  	<h2 class="text-center">${vo.title}</h2>
  	<table class="table table-borderless p-0 m-0">
-	<tr>
-		<td></td>
- 		<td class="text-right mb-4 p-0">
- 			<c:if test="${vo.claim == 'NO' && sMid != vo.mid}"><a href="#" onclick="" data-toggle="modal" data-target="#myModal" class="btn btn-outline-danger">신고하기</a></c:if>
- 			<c:if test="${vo.claim != 'NO'}"><font color="red">신고된 글 입니다.</font></c:if>
-		</td>
-	</tr>
- 	<tr>
- 		<td class="p-0 m-0">
- 			조회수 : ${vo.readNum}
-		</td>
- 		<td class="text-right p-0 m-0">
- 			접속IP : ${vo.hostIp}
-		</td>
+		<tr>
+			<td></td>
+	 		<td class="text-right mb-4 p-0">
+	 			<c:if test="${vo.claim == 'NO' && sMid != vo.mid}"><a href="#" onclick="" data-toggle="modal" data-target="#myModal" class="btn btn-outline-danger">신고하기</a></c:if>
+	 			<c:if test="${vo.claim != 'NO'}"><font color="red">신고된 글 입니다.</font></c:if>
+			</td>
+		</tr>
+	 	<tr>
+	 		<td class="p-0 m-0">
+	 			조회수 : ${vo.readNum}
+			</td>
+	 		<td class="text-right p-0 m-0">
+	 			접속IP : ${vo.hostIp}
+			</td>
 		</tr>
 	</table>
  	<table class="table table-bordered">
@@ -170,19 +266,147 @@
  		</tr>
  	</table>
  	<table class="table table-borderless">
-	    <tr>
-	    	<td colspan="2">
-		      <input type="button" value="돌아가기" onclick="location.href='BoardList.bo?pag=${pag}'" class="btn btn-secondary mr-2"/>
-	      </td>
-      	<td class="text-right">
-			    <c:if test="${sMid == vo.mid || sLevel==0}">
-			      	<input type="button" value="수정하기" onclick="location.href='BoardUpdate.bo?idx=${vo.idx}&pag=${pag}'" class="btn btn-warning mr-2"/>	
-				      <input type="button" value="삭제하기" onclick="BoardDelete()" class="btn btn-danger mr-2"/>
-		      </c:if>
-				</td>
-	    </tr>
+    <tr>
+    	<td colspan="2">
+	      <input type="button" value="돌아가기" onclick="location.href='BoardList.bo?pag=${pag}'" class="btn btn-secondary mr-2"/>
+      </td>
+    	<td class="text-right">
+		    <c:if test="${sMid == vo.mid || sLevel==0}">
+		      	<input type="button" value="수정하기" onclick="location.href='BoardUpdate.bo?idx=${vo.idx}&pag=${pag}'" class="btn btn-warning mr-2"/>	
+			      <input type="button" value="삭제하기" onclick="BoardDelete()" class="btn btn-danger mr-2"/>
+	      </c:if>
+			</td>
+    </tr>
   </table>
+  
+  <hr>
+  
+	<!-- 이전글/다음글 시작 -->
+	<c:if test="${!empty nextVo.title}">
+		<div>다음글 <a href="BoardContent.bo?idx=${nextVo.idx}&pag=${pag}&pageSize=${pageSize}">${nextVo.title}</a></div>
+	</c:if>
+	<c:if test="${!empty preVo.title}">
+		<div>이전글 <a href="BoardContent.bo?idx=${preVo.idx}&pag=${pag}&pageSize=${pageSize}">${preVo.title}</a></div>
+	</c:if>
+	<!-- 이전글/다음글 끝 -->
+
+	<hr>
+	
+	<div id="replyViewList">
+		<table class="table table-hover text-center">
+			<tr>
+				<th style="width: 70px;">작성자</th>
+				<th>댓글 내용</th>
+				<th>댓글 날짜</th>
+				<th>접속 IP</th>
+				<th style="width: 2px;"></th>
+			</tr>
+			<c:forEach var="vo" items="${replyVos}" varStatus="st">
+				<tr>
+					<td>${vo.nickName}</td>
+					<td class="text-left">${fn:replace(vo.content,newLine,"<br/>")}</td>
+					<td>${fn: substring(vo.wDate,0,10)}</td>
+					<td>${vo.hostIp}</td>
+					<td>
+						<div class="dropdown dropright">
+						  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+					    	.
+						  </button>
+						  <div class="dropdown-menu text-center" style="width: 10px;">
+								<c:if test="${sMid == vo.mid || sLevel == 0}">
+							  	<c:if test="${sMid == vo.mid}">
+						 				<div><a href="javascript:replyDeleteUpdateCheck(${vo.idx})" title="수정" style="color: black;">수정</a></div>
+					 				</c:if>
+						 			<div><a href="javascript:replyDeleteCheck(${vo.idx})" title="삭제" style="color: black;">삭제</a></div>
+								</c:if>
+						  </div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" class="m-0 p-0">
+						<div id="replyUpdateForm${vo.idx}" style="display: none;">
+							<form action="">
+								<table class="table table-borderless text-center">
+									<tr style="height: 10px;">
+										<td style="text-align: left; padding-bottom: 0px;">
+											작성자 : ${sNickName}
+									 	</td>
+								 </tr>
+									<tr>
+										<td style="padding-top: 0px;" colspan="2">
+											<textarea rows="4" class="form-control" name="content" id="content${vo.idx}">${vo.content}</textarea>
+										</td>
+									</tr>
+									<tr>
+										<td class="text-left">
+									  	<input type="button" value="취소" onclick="replyUpdateViewClose(${vo.idx})" class="btn btn-warning btn-sm">
+								  	</td>
+								  	<td class="text-right">
+									  	<input type="button" value="댓글수정" onclick="replyUpdateCheck(${vo.idx})" class="btn btn-info btn-sm">
+								  	</td>
+							  	</tr>
+								</table>
+							</form>
+						</div>
+					</td>
+				</tr>
+			</c:forEach>
+			<tr><td colspan="4" class="m-0 p-0"></td></tr>
+		</table>
+		
+		<!-- 블록페이지 시작 -->
+	  <div class="pagination-wrapper text-center">
+	    <ul class="pagination mt-3">
+	      <li class="page-item">
+	        <c:if test="${pag > 1}"><a class="page-link text-secondary" href="BoardList.bo?pageSize=${pageSize}&pag=1">첫 페이지</a></c:if>
+	        <c:if test="${pag <= 1}"><span class="page-link disabled text-secondary">첫페이지</span></c:if>
+	      </li>
+	      <li class="page-item">
+	        <c:if test="${curBlock > 0}"><a class="page-link text-secondary" href="BoardList.bo?pageSize=${pageSize}&pag=${(curBlock-1)*blockSize + 1}">이전블록</a></c:if>
+	        <c:if test="${curBlock <= 0}"><span class="page-link disabled text-secondary">이전블록</span></c:if>
+	      </li>
+	      
+	      <c:forEach var="i" begin="${(curBlock*blockSize)+1}" end="${(curBlock*blockSize) + blockSize}" varStatus="st">
+	        <c:if test="${i <= totPage && i == pag}">
+	          <li class="page-item active"><a class="page-link bg-secondary border-secondary" href="BoardList.bo?pageSize=${pageSize}&pag=${i}">${i}</a></li>
+	        </c:if>
+	        <c:if test="${i <= totPage && i != pag}">
+	          <li class="page-item"><a class="page-link text-secondary" href="BoardList.bo?pageSize=${pageSize}&pag=${i}">${i}</a></li>
+	        </c:if>
+	      </c:forEach>
+	      
+	      <li class="page-item">
+	        <c:if test="${curBlock >= lastBlock}"><span class="page-link disabled text-secondary">다음블록</span></c:if>
+	        <c:if test="${curBlock < lastBlock}"><a class="page-link text-secondary" href="BoardList.bo?pageSize=${pageSize}&pag=${(curBlock+1)*blockSize + 1}">다음블록</a></c:if>
+	      </li>
+	      
+	      <li class="page-item">
+	        <c:if test="${pag >= totPage}"><span class="page-link disabled text-secondary">마지막 페이지</span></c:if>
+	        <c:if test="${pag < totPage}"><a class="page-link text-secondary" href="BoardList.bo?pageSize=${pageSize}&pag=${totPage}">마지막 페이지</a></c:if>
+	      </li>
+	    </ul>
+	  </div>
+	    <!-- 블록페이지 끝 -->
+	
+		<form action="">
+			<table class="table table-borderless text-center">
+				 <tr style="height: 10px;">
+					<td style="text-align: left; padding-bottom: 0px;">
+						작성자 : ${sNickName}
+				 	</td>
+				 </tr>
+				<tr>
+					<td style="padding-top: 0px;">
+						<textarea rows="4" class="form-control" name="content" id="content" placeholder="댓글을 입력하세요"></textarea>
+						<p style="text-align: right;"><input type="button" value="댓글달기" onclick="replyCheck()" class="btn btn-info btn-sm"></p>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </div>
+
 
 <!-- The Modal 시작 -->
 <div class="modal fade" id="myModal">

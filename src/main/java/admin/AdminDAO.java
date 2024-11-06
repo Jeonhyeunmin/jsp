@@ -168,4 +168,19 @@ public class AdminDAO {
 		}
 		return res;
 	}
+
+//	게시물 선택 삭제
+	public void setBoardSelectDelete(int idx) {
+		try {
+			sql = "delete from board where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		
+	}
 }
