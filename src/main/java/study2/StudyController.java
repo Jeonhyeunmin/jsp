@@ -14,6 +14,13 @@ import study2.ajax.AjaxIdCheck0Command;
 import study2.ajax.AjaxIdCheck1Command;
 import study2.ajax.AjaxPointCheckCommand;
 import study2.password.PassCheckOkCommand;
+import study2.pdstest.FileDeletecommand;
+import study2.pdstest.FileDownloadcommand;
+import study2.pdstest.FileUpload1Okommand;
+import study2.pdstest.FileUpload2Okommand;
+import study2.pdstest.FileUpload3Okommand;
+import study2.pdstest.FileUpload4Command;
+import study2.pdstest.javaFileDownloadcommand;
 
 
 @WebServlet("*.st")
@@ -70,6 +77,57 @@ public class StudyController extends HttpServlet{
 			command.execute(request, response);
 			return;
 		}
+		else if(com.equals("/FileUpload")) {
+			viewPage += "/study2/pdstest/fileUpload.jsp";
+		}
+		else if(com.equals("/FileUpload1")) {
+			viewPage += "/study2/pdstest/fileUpload1.jsp";
+		}
+		else if(com.equals("/FileUpload1Ok")) {
+			command = new FileUpload1Okommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/FileUpload2")) {
+			viewPage += "/study2/pdstest/fileUpload2.jsp";
+		}
+		else if(com.equals("/FileUpload2Ok")) {
+			command = new FileUpload2Okommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/FileUpload3")) {
+			viewPage += "/study2/pdstest/fileUpload3.jsp";
+		}
+		else if(com.equals("/FileUpload3Ok")) {
+			command = new FileUpload3Okommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/FileUpload4")) {
+			viewPage += "/study2/pdstest/fileUpload4.jsp";
+		}
+		else if(com.equals("/FileUpload4Ok")) {
+			command = new FileUpload4Command();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/FileDownload")) {
+			command = new FileDownloadcommand();
+			command.execute(request, response);
+			viewPage += "/study2/pdstest/fileDownload.jsp";
+		}
+		else if(com.equals("/FileDelete")) {
+			command = new FileDeletecommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/JavaFileDownload")) {
+			command = new javaFileDownloadcommand();
+			command.execute(request, response);
+			return;
+		}
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 	}

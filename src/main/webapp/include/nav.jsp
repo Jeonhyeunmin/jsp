@@ -44,6 +44,7 @@
 			      <a class="dropdown-item" href="${ctp}/study/database/DbList">DataBase 연습</a>
 			      <a class="dropdown-item" href="PassCheckForm.st">암호화 연습</a>
 			      <a class="dropdown-item" href="AjaxTest.st">AJAX</a>
+			      <a class="dropdown-item" href="FileUpload.st">파일 업로드 연습</a>
 			    </div>
 			  </div>
       </li>
