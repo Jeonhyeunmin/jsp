@@ -107,6 +107,17 @@ public class StudyController extends HttpServlet{
 		else if(com.equals("/FileUpload4")) {
 			viewPage += "/study2/pdstest/fileUpload4.jsp";
 		}
+		else if(com.equals("/FileUpload5")) {
+			viewPage += "/study2/pdstest/fileUpload5.jsp";
+		}
+		else if(com.equals("/FileUpload5Ok")) {
+//		command = new FileUpload5OkCommand();
+//		command.execute(request, response);
+//		viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/FileUpload6")) {
+			viewPage += "/study2/pdstest/fileUpload6.jsp";
+		}
 		else if(com.equals("/FileUpload4Ok")) {
 			command = new FileUpload4Command();
 			command.execute(request, response);
