@@ -1,4 +1,4 @@
-package pds;
+package schedule;
 
 import java.io.IOException;
 
@@ -13,23 +13,30 @@ import javax.servlet.http.HttpSession;
 import admin.board.BoardListCommand;
 import admin.board.BoardSelectDeleteCommand;
 import admin.claim.BoardClaimInputCommand;
+import admin.claim.ClaimDeleteOkCommand;
 import admin.claim.ClaimListCommand;
 import admin.claim.ClaimViewCheckCommand;
+import admin.member.MemberDeleteCommand;
 import admin.member.MemberDetailViewCommand;
 import admin.member.MemberLevelChangeCommand;
 import admin.member.MemberListCommand;
+import admin.review.ReviewDeleteCommand;
+import admin.review.ReviewInputOkCommand;
+import admin.review.ReviewReplyDeleteCommand;
+import admin.review.ReviewReplyInputOkCommand;
 
 @SuppressWarnings("serial")
-@WebServlet("*.pds")
-public class PdsController extends HttpServlet {
+@WebServlet("*.sc")
+public class ScheduleController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PdsInterface command = null;
-		String viewPage = "/WEB-INF/pds";
+		ScheduleInterface command = null;
+		String viewPage = "/WEB-INF/schedule";
 		
 		String com = request.getRequestURI();
 		com = com.substring(com.lastIndexOf("/"), com.lastIndexOf("."));
 		
+		// 인증처리.....(spring에서는 aop의 개념)
 		HttpSession session = request.getSession();
 		int level = session.getAttribute("sLevel")==null ? 999 : (int) session.getAttribute("sLevel");
 		
@@ -38,52 +45,33 @@ public class PdsController extends HttpServlet {
 			request.setAttribute("url", "/MemberLogin.mem");
 			viewPage = "/include/message.jsp";
 		}
-		else if(com.equals("/PdsList")) {
-			command = new PdsListCommand();
+		
+		else if(com.equals("/Schedule")) {
+			command = new ScheduleCommand();
 			command.execute(request, response);
-			viewPage += "/pdsList.jsp";
+			viewPage += "/schedule.jsp";
 		}
-		else if(com.equals("/PdsContent")) {
-			command = new PdsContentCommand();
+		
+		else if(com.equals("/ScheduleMenu")) {
+			command = new ScheduleMenuCommand();
 			command.execute(request, response);
-			viewPage += "/pdsContent.jsp";
+			viewPage += "/scheduleMenu.jsp";
 		}
-//		else if(com.equals("/PdsSearchList")) {
-//			command = new PdsSearchListCommand();
-//			command.execute(request, response);
-//			viewPage += "/pdsList.jsp";
-//		}
-		else if(level > 1 && com.equals("/PdsDownNumCheck")) {
-			command = new PdsDownNumCheckCommand();
+		else if(com.equals("/ScheduleInputOk")) {
+			command = new ScheduleInputOkCommand();
 			command.execute(request, response);
 			return;
 		}
-		else if(level > 4) {
-			request.setAttribute("message", "우수회원 부터 업로드 가능합니다.");
-			request.setAttribute("url", "/MemberLogin.mem");
-			viewPage = "/include/message.jsp";
-		}
-		else if(com.equals("/PdsInput")) {
-			command = new PdsInputCommand();
-			command.execute(request, response);
-			viewPage += "/pdsInput.jsp";
-		}
-		else if(com.equals("/PdsInputOk")) {
-			command = new PdsInputOkCommand();
-			command.execute(request, response);
-			viewPage = "/include/message.jsp";
-		}
-		else if(com.equals("/PdsDeleteCheck")) {
-			command = new PdsDeleteCheckCommand();
+		else if(com.equals("/ScheduleUpdateOk")) {
+			command = new ScheduleUpdateOkCommand();
 			command.execute(request, response);
 			return;
 		}
-		else if(com.equals("/PdsTotalDown")) {
-			command = new PdsTotalDownCommand();
+		else if(com.equals("/ScheduleDeleteOk")) {
+			command = new ScheduleDeleteOkCommand();
 			command.execute(request, response);
-			viewPage = "/include/message.jsp";
+			return;
 		}
-
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
