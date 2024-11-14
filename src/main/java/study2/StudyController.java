@@ -22,6 +22,11 @@ import study2.pdstest.FileUpload2Okommand;
 import study2.pdstest.FileUpload3Okommand;
 import study2.pdstest.FileUpload4Command;
 import study2.pdstest.javaFileDownloadcommand;
+import study2.photoView.PhotoStorageListCommand;
+import study2.photoView.PhotoView1Okcommand;
+import study2.photoView.PhotoView2OkCommand;
+import study2.photoView.PhotoViewDeleteCommand;
+import study2.uuid.UuidFormOkcommand;
 
 
 @WebServlet("*.st")
@@ -143,6 +148,40 @@ public class StudyController extends HttpServlet{
 			command = new calendarcommand();
 			command.execute(request, response);
 			viewPage += "/study2/calendar/calendar.jsp";
+		}
+		else if(com.equals("/UuidForm")) {
+			viewPage += "/study2/UUID/uuidForm.jsp";
+		}
+		else if(com.equals("/UuidFormOk")) {
+			command = new UuidFormOkcommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/PhotoView")) {
+			viewPage += "/study2/photoView/photoView1.jsp";
+		}
+		else if(com.equals("/PhotoView1Ok")) {
+			command = new PhotoView1Okcommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/PhotoView2")) {
+			viewPage += "/study2/photoView/photoView2.jsp";
+		}
+		else if(com.equals("/PhotoView2Ok")) {
+			command = new PhotoView2OkCommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/PhotoStorageList")) {
+			command = new PhotoStorageListCommand();
+			command.execute(request, response);
+			viewPage += "/study2/photoView/photoStorageList.jsp";
+		}
+		else if(com.equals("/PhotoViewDelete")) {
+			command = new PhotoViewDeleteCommand();
+			command.execute(request, response);
+			return;
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
