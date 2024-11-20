@@ -43,7 +43,8 @@
 			      <a class="dropdown-item" href="${ctp}/study/1018_JSTL/JstlMenu.jsp">JSTL 연습</a>
 			      <a class="dropdown-item" href="${ctp}/study/database/DbList">DataBase 연습</a>
 			      <a class="dropdown-item" href="PassCheckForm.st">암호화 연습</a>
-			      <a class="dropdown-item" href="AjaxTest.st">AJAX</a>
+			      <a class="dropdown-item" href="AjaxTest.st">AJAX 연습</a>
+			      <a class="dropdown-item" href="AjaxTest2.st">AJAX 응용</a>
 			      <a class="dropdown-item" href="FileUpload.st">파일 업로드 연습</a>
 			      <a class="dropdown-item" href="Calendar.st">인터넷 달력 연습</a>
 			      <a class="dropdown-item" href="UuidForm.st">UUID</a>

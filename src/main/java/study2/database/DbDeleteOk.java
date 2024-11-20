@@ -17,7 +17,7 @@ public class DbDeleteOk extends HttpServlet{
 		int idx = request.getParameter("idx") == null || request.getParameter("idx").equals("") ? 0 : Integer.parseInt(request.getParameter("idx"));
 		DbTestDAO dao = new DbTestDAO();
 		
-		int res = dao.setDbDelete(idx);
+		int res = dao.setDbDeleteOk(idx);
 		
 		if(res != 0) {
 			request.setAttribute("message", "회원이 삭제되었습니다.");

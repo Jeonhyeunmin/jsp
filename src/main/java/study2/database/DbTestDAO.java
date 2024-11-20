@@ -1,16 +1,17 @@
 package study2.database;
 
+import java.security.AlgorithmParametersSpi;
+import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 public class DbTestDAO {
 	private Connection conn = null;
+	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
-	private PreparedStatement pstmt = null; 
 	
 	String sql = "";
 	DbTestVO vo = null;
@@ -21,16 +22,16 @@ public class DbTestDAO {
 		String password = "1234";
 		
 		try {
-      Class.forName("com.mysql.jdbc.Driver");
-      conn = DriverManager.getConnection(url, user, password);
-   } catch (ClassNotFoundException e) {
-      System.out.println("드라이버 검색 실패 : " + e.getMessage());
-   } catch (SQLException e) {
-      System.out.println("데이터베이스 연동 실패 :" + e.getMessage());
-   }
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection(url, user, password);
+		} catch (ClassNotFoundException e) {
+			System.out.println("드라이버 검색 실패 : " + e.getMessage());
+		} catch (SQLException e) {
+			System.out.println("Databse 연동 실패 : " + e.getMessage());
+		}
 	}
 	
-//		사용하지 않는 객체 반납 ( conn, pstmt, rs)
+	// 사용하지 않는 객체 반납(conn, pstmt, rs)
 	public void connClose() {
 		if(conn != null) {
 			try {
@@ -38,6 +39,7 @@ public class DbTestDAO {
 			} catch (SQLException e) {}
 		}
 	}
+	
 	public void pstmtClose() {
 		if(pstmt != null) {
 			try {
@@ -45,24 +47,23 @@ public class DbTestDAO {
 			} catch (SQLException e) {}
 		}
 	}
+	
 	public void rsClose() {
 		if(rs != null) {
 			try {
 				rs.close();
-				pstmt.close();
+				pstmtClose();
 			} catch (SQLException e) {}
 		}
 	}
 
-//	개별 자료 검색(1건 검색)
+	// 개별 자료 검색...1건 검색
 	public DbTestVO getDbTestSearch(int idx) {
-		vo = new DbTestVO();
 		try {
 			sql = "select * from hoewon where idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, idx);
 			rs = pstmt.executeQuery();
-			
 			if(rs.next()) {
 				vo = new DbTestVO();
 				vo.setIdx(rs.getInt("idx"));
@@ -72,15 +73,14 @@ public class DbTestDAO {
 				vo.setAddress(rs.getString("address"));
 			}
 		} catch (SQLException e) {
-			System.out.println("SQL 오류" + e.getMessage());
+			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
 			rsClose();
 		}
-		
 		return vo;
 	}
 
-//	전체 자료 출력
+	// 전체 자료 출력
 	public ArrayList<DbTestVO> getDbTestList(String name) {
 		ArrayList<DbTestVO> vos = new ArrayList<DbTestVO>();
 		try {
@@ -101,22 +101,22 @@ public class DbTestDAO {
 				vo.setAge(rs.getInt("age"));
 				vo.setGender(rs.getString("gender"));
 				vo.setAddress(rs.getString("address"));
+				
 				vos.add(vo);
-		}
+			}
 		} catch (SQLException e) {
-			System.out.println("SQL 오류" + e.getMessage());
+			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
 			rsClose();
 		}
-		
 		return vos;
 	}
 
-//	회원 자료 등록
+	// 회원 자료 등록
 	public int setDbInputOk(DbTestVO vo) {
 		int res = 0;
 		try {
-			sql = "insert into hoewon values(default, ?, ?, ?, ?)";
+			sql = "insert into hoewon values (default,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getName());
 			pstmt.setInt(2, vo.getAge());
@@ -124,18 +124,18 @@ public class DbTestDAO {
 			pstmt.setString(4, vo.getAddress());
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("SQL 오류" + e.getMessage());
+			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
 			pstmtClose();
 		}
 		return res;
 	}
 
-//	회원 개인정보 수정
+	// 회원 개인 정보 수정처리
 	public int setDbUpdateOk(DbTestVO vo) {
 		int res = 0;
 		try {
-			sql = "update hoewon set name = ?, age = ?, gender = ?, address = ? where idx = ?";
+			sql = "update hoewon set name=?,age=?,gender=?,address=? where idx = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getName());
 			pstmt.setInt(2, vo.getAge());
@@ -144,14 +144,15 @@ public class DbTestDAO {
 			pstmt.setInt(5, vo.getIdx());
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("SQL 오류" + e.getMessage());
+			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
 			pstmtClose();
 		}
 		return res;
 	}
 
-	public int setDbDelete(int idx) {
+	// 회원 정보 삭제처리
+	public int setDbDeleteOk(int idx) {
 		int res = 0;
 		try {
 			sql = "delete from hoewon where idx = ?";
@@ -159,10 +160,61 @@ public class DbTestDAO {
 			pstmt.setInt(1, idx);
 			res = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			System.out.println("SQL 오류" + e.getMessage());
+			System.out.println("SQL 오류 : " + e.getMessage());
 		} finally {
 			pstmtClose();
 		}
 		return res;
+	}
+
+	// 아이디로 검색하여 vo자료 넘겨주기
+	public DbTestVO getIdSearch(String mid) {
+		try {
+			sql = "select * from hoewon3 where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				vo = new DbTestVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setName(rs.getString("name"));
+				vo.setAge(rs.getInt("age"));
+				vo.setGender(rs.getString("gender"));
+				vo.setAddress(rs.getString("address"));
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vo;
+	}
+
+//	비슷한 아이디 가져오기
+	public ArrayList<DbTestVO> getIdSameSearch(String mid) {
+		ArrayList<DbTestVO> vos = new ArrayList<DbTestVO>();
+		try {
+			sql = "select * from hoewon3 where mid like ? order by mid";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + mid + "%");
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				vo = new DbTestVO();
+				vo.setIdx(rs.getInt("idx"));
+				vo.setMid(rs.getString("mid"));
+				vo.setName(rs.getString("name"));
+				vo.setAge(rs.getInt("age"));
+				vo.setGender(rs.getString("gender"));
+				vo.setAddress(rs.getString("address"));
+				
+				vos.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류 : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
 	}
 }
